@@ -21,7 +21,7 @@ Resources:
       Runtime: python3.10
       Architectures:
         - x86_64
-      Role: arn:aws:iam::902550277123:role/StartStopRole
+
       Events:
        EvenBridgeSchedule:
         Type: ScheduleV2
@@ -40,7 +40,7 @@ Resources:
       Runtime: python3.10
       Architectures:
         - x86_64
-      Role: arn:aws:iam::902550277123:role/StartStopRole
+
       Events:
        EvenBridgeSchedule:
         Type: ScheduleV2
