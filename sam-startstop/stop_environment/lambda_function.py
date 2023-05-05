@@ -14,9 +14,14 @@ def stop_ec2():
         for i in instance['Instances']:
             if i['State']['Name'] == 'running':
                 ec2_instances.append(i['InstanceId'])
-                
-    ec2.stop_instances(InstanceIds=ec2_instances)
-    print('stoped instances: ' + str(ec2_instances))
+
+    #check if there are any instances to stop
+    if len(ec2_instances) > 0:
+        #stop instances
+        ec2.stop_instances(InstanceIds=ec2_instances)
+        print('stoped instances: ' + str(ec2_instances))          
+    else:
+        print('no instances to stop')
 
 #stop rds clusters
 def stop_rds():
@@ -28,9 +33,9 @@ def stop_rds():
         if cluster['Status'] == 'running':
             #stop cluster
             rds.stop_db_cluster(DBClusterIdentifier=cluster['DBClusterIdentifier'])
-            rds_clusters.append(cluster['DBClusterIdentifier'])
-
-    print('stoped  rds clusters: ' + str(rds_clusters))
+            print('stoped cluster: ' + cluster['DBClusterIdentifier'])
+        else:
+            print('cluster is not running: ' + cluster['DBClusterIdentifier'])
 
 def lambda_handler(event,context):
     #stop ec2 instances

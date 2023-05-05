@@ -14,23 +14,26 @@ def start_ec2():
         for i in instance['Instances']:
             if i['State']['Name'] == 'stopped':
                 ec2_instances.append(i['InstanceId'])
-                
-    ec2.start_instances(InstanceIds=ec2_instances)
-    print('started instances: ' + str(ec2_instances))
+    
+    #check if there are instances to start
+    if len(ec2_instances) > 0:
+        ec2.start_instances(InstanceIds=ec2_instances)
+        print('started instances: ' + str(ec2_instances))
+    else:
+        print('no instances to start')
 
 #start rds clusters
 def start_rds():
     rds = boto3.client('rds', region_name=region)
-    rds_clusters = []
 
     #get a list of stopped rds clusters
     for cluster in rds.describe_db_clusters()['DBClusters']:
         if cluster['Status'] == 'stopped':
             #start cluster
             rds.start_db_cluster(DBClusterIdentifier=cluster['DBClusterIdentifier'])
-            rds_clusters.append(cluster['DBClusterIdentifier'])
-
-    print('started  rds clusters: ' + str(rds_clusters))
+            print('started rds cluster: ' + cluster['DBClusterIdentifier'])
+        else:
+            print('rds cluster already running: ' + cluster['DBClusterIdentifier'])
 
 def lambda_handler(event,context):
     #start ec2 instances
