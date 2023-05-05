@@ -30,7 +30,7 @@ def stop_rds():
 
     #get a list of stopped rds clusters
     for cluster in rds.describe_db_clusters()['DBClusters']:
-        if cluster['Status'] == 'running':
+        if cluster['Status'] == 'available':
             #stop cluster
             rds.stop_db_cluster(DBClusterIdentifier=cluster['DBClusterIdentifier'])
             print('stoped cluster: ' + cluster['DBClusterIdentifier'])
