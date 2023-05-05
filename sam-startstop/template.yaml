@@ -16,7 +16,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       FunctionName: StartEnvironment
-      CodeUri: start_ec2
+      CodeUri: start_environment
       Handler: lambda_function.lambda_handler
       Runtime: python3.10
       Architectures:
@@ -28,14 +28,14 @@ Resources:
         Properties:
           Name: Startenvironment
           Description: Start environment on the days that I work
-          ScheduleExpression: cron(30 6 ? * 2,5,6 *)
+          ScheduleExpression: cron(* 6 ? * 2,5,6 *)
           State: ENABLED
 
   StopEnvironment:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       FunctionName: StopEnvironment
-      CodeUri: stop_ec2
+      CodeUri: stop_environment
       Handler: lambda_function.lambda_handler
       Runtime: python3.10
       Architectures:
