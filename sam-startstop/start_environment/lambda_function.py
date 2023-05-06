@@ -1,8 +1,9 @@
 import boto3 
+import os
 
 #start environment on a fixed schedule
 
-region = 'eu-west-2'
+region = os.environ['AWS_REGION']
 
 #start ec2 instances 
 def start_ec2():
@@ -36,6 +37,8 @@ def start_rds():
             print('rds cluster already running: ' + cluster['DBClusterIdentifier'])
 
 def lambda_handler(event,context):
+    print("Running in region: " + region)
+
     #start ec2 instances
     start_ec2()
         

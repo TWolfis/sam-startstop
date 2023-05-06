@@ -2,7 +2,8 @@ import boto3
 
 #stop environment on a fixed schedule
 
-region = 'eu-west-2'
+import os
+region = os.environ['AWS_REGION']
 
 #stop ec2 instances 
 def stop_ec2():
